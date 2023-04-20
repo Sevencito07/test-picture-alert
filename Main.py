@@ -1,28 +1,28 @@
-from selenium import webdriver
-from selenium.webdriver.common.alert import Alert
-from PIL import ImageGrab
-import time
+# Cargar la biblioteca Selenium.WebDriver
+Add-Type -Path "C:\path\to\Selenium.WebDriver.dll"
 
-# Iniciar el navegador web en modo headless
-options = webdriver.ChromeOptions()
-options.add_argument('--headless')
-driver = webdriver.Chrome(options=options)
+# Configurar el navegador Chrome
+$options = New-Object OpenQA.Selenium.Chrome.ChromeOptions
+$options.AddArgument("--headless")
+$driver = New-Object OpenQA.Selenium.Chrome.ChromeDriver($options)
 
 # Navegar a la página web deseada
-driver.get('https://ejemplo.com')
+$driver.Navigate().GoToUrl("https://ejemplo.com")
 
-while True:
+while($true) {
     # Esperar a que aparezca una alerta
-    alert = Alert(driver)
-    alert_text = alert.text
-    while not alert_text:
-        alert_text = alert.text
+    $alert = $driver.SwitchTo().Alert()
+    $alertText = $alert.Text
+    while(!$alertText) {
+        $alertText = $alert.Text
+    }
 
     # Tomar una captura de pantalla de la pantalla actual
-    screenshot = ImageGrab.grab()
+    $screenshot = $driver.GetScreenshot()
 
     # Guardar la captura de pantalla en un archivo
-    screenshot.save('captura.png')
+    $screenshot.SaveAsFile("captura.png", "png")
 
     # Esperar 10 segundos antes de buscar otra alerta
-    time.sleep(10)
+    Start-Sleep -Seconds 10
+}
