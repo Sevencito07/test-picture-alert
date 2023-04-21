@@ -24,5 +24,23 @@ while($true) {
     $screenshot.SaveAsFile("captura.png", "png")
 
     # Esperar 10 segundos antes de buscar otra alerta
-    Start-Sleep -Seconds 10
-}
+    Start-Sleep -Seconds 
+    
+    
+    
+// Agregamos un "event listener" al objeto global "window"
+
+window.addEventListener('alert', function(e) {
+  console.log(e.detail);
+});
+
+
+
+
+
+
+
+
+
+
+
